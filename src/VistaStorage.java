@@ -1,26 +1,25 @@
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class VistaStorage {
-    private static String[] vistas = new String[255];
-    private static int contador = 0;
 
-    public static boolean insertarVista(String nombre) {
-        if (contador >= 255) {
-            return false;
+
+    public void guardar(String[][] compras, int size) {
+        try (FileWriter writer = new FileWriter("compras.txt")) {
+
+            writer.write("CÓDIGO | NOMBRE | CANTIDAD\n");
+            writer.write("-----------------------------------------\n");
+
+            for (int i = 0; i < size; i++) {
+                writer.write(
+                        compras[i][0] + " | " +
+                                compras[i][1] + " | " +
+                                compras[i][2] + "\n"
+                );
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error al guardar archivo: " + e.getMessage());
         }
-        vistas[contador] = nombre;
-        contador++;
-        return true;
-    }
-
-    public static boolean estaLleno() {
-        return contador >= 255;
-    }
-
-    public static String[] obtenerVistas() {
-        return vistas;
-    }
-
-    public static int getCantidadVistas() {
-        return contador;
     }
 }
-
